@@ -1,5 +1,6 @@
 import pygame
 from enum import Enum
+from player import Player
 
 # Declare game states here
 
@@ -14,14 +15,14 @@ BLACK = (0, 0, 0)
 BG = CF_BLUE
 
 # Instantiate objects here
-
+player = Player(SURFACE, 320, 240)
 
 def draw():
-    pass
+    player.draw()
 
 
 def update_elements():
-    pass
+    player.update()
 
 
 def update():
