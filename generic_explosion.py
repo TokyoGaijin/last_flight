@@ -15,4 +15,7 @@ class Explosion:
 
     def update(self):
         self.kaboom.animate()
+    
+    
+    def draw(self):
         self.kaboom.draw()

@@ -49,4 +49,8 @@ class Enemy:
     def draw(self):
         if self.current_state == EnemyState.ALIVE:
             self.live_anim.draw()
+
+        if self.current_state == EnemyState.DYING:
+            for e in self.explosion_list:
+                e.draw()
         

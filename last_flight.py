@@ -4,7 +4,7 @@ from player import Player
 
 # Testing Imports
 import random
-from test_enemy import Enemy, EnemyState
+from new_test_enemy import Enemy
 
 # Declare game states here
 
@@ -20,9 +20,14 @@ BG = CF_BLUE
 
 # Instantiate objects here
 player = Player(SURFACE, 320, 240)
-enemy = Enemy(SURFACE, random.randrange(0, SCREEN_X - 62), -62)
+enemy_list = []
+
+def add_enemy():
+    enemy_list.append(Enemy(SURFACE, random.randrange(0, SCREEN_X - 62), -62))
 
 def draw():
+    for e in enemy_list:
+        e.draw()
     player.draw()
 
 
@@ -30,8 +35,20 @@ def draw():
 def update_elements():
     player.update()
 
+    if len(enemy_list) < 1:
+        add_enemy()
 
-        
+    for e in enemy_list:
+        e.update()
+        for b in player.bullet_list:
+            if b.rect.colliderect(e.rect):
+                e.hp = 0
+                player.bullet_list.remove(b)
+        if not e.is_alive or e.rect.top >= SCREEN_Y:
+            enemy_list.remove(e)
+
+
+
         
 
 
