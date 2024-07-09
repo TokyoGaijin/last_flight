@@ -2,6 +2,7 @@ import pygame
 import os
 from animator import Animator
 from enum import Enum
+import random
 
 # Add a STATE class if necessary
 # Delete the import to free memory if unused
@@ -14,7 +15,7 @@ class Enemy:
             startX,
             startY,
             2,
-            [pygame.image.load(os.path.join("sprite_assets", f"enemy_1_{i}.png")) for i in range(0, 2)]
+            [pygame.image.load(os.path.join("sprite_assets", f"boss_1_{i}.png")) for i in range(0, 2)]
         )
         self.is_dying = False
         self.is_alive = True
@@ -26,7 +27,7 @@ class Enemy:
             8,
             [pygame.image.load(os.path.join("sprite_assets", f"generic_explosion_{i}.png")) for i in range(0, 8)]
         )
-        self.rect = pygame.Rect(startX, startY, 64, 64)
+        self.rect = pygame.Rect(startX, startY, 150, 50)
         self.hp = 100
         self.speed = 3
 

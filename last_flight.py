@@ -41,7 +41,7 @@ def update_elements():
     for e in enemy_list:
         e.update()
         for b in player.bullet_list:
-            if b.rect.colliderect(e.rect):
+            if b.rect.colliderect(e.rect) and not e.is_dying:
                 e.hp = 0
                 player.bullet_list.remove(b)
         if not e.is_alive or e.rect.top >= SCREEN_Y:
