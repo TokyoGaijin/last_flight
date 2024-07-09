@@ -2,6 +2,10 @@ import pygame
 from enum import Enum
 from player import Player
 
+# Testing Imports
+import random
+from test_enemy import Enemy, EnemyState
+
 # Declare game states here
 
 SCREEN_X = 640
@@ -16,14 +20,19 @@ BG = CF_BLUE
 
 # Instantiate objects here
 player = Player(SURFACE, 320, 240)
-
+enemy = Enemy(SURFACE, random.randrange(0, SCREEN_X - 62), -62)
 
 def draw():
     player.draw()
 
 
+
 def update_elements():
     player.update()
+
+
+        
+        
 
 
 def update():
