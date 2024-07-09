@@ -17,6 +17,7 @@ BG = CF_BLUE
 # Instantiate objects here
 player = Player(SURFACE, 320, 240)
 
+
 def draw():
     player.draw()
 

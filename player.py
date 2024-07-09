@@ -2,6 +2,7 @@ import pygame
 import os
 from animator import Animator
 from enum import Enum
+from bullet import Bullet
 
 class PlayerState(Enum):
     ALIVE = 0
@@ -25,6 +26,13 @@ class Player:
         self.current_anim = self.live_anim
         self.rect = pygame.Rect(startX, startY, 50, 50)
         self.explosion_list = []
+        self.bullet_list = []
+        self.cool_timer = 0
+        self.FIRE_BUFFER = 60 / 2
+
+    def fire(self):
+        self.bullet_list.append(Bullet(self.surface, self.rect.x + 10, self.rect.y + 10, "up", color = (255, 255, 0)))
+        self.bullet_list.append(Bullet(self.surface, self.rect.right - 15, self.rect.y + 10, "up", color = (255, 255, 0)))
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -37,6 +45,20 @@ class Player:
                 self.rect.y -= self.speed
             if keys[pygame.K_DOWN] and self.rect.bottom <= 480:
                 self.rect.y += self.speed
+
+            if keys[pygame.K_SPACE]:
+                if len(self.bullet_list) < 6 and self.cool_timer % self.FIRE_BUFFER == 0:
+                    self.fire()
+                self.cool_timer += 1
+            else:
+                self.cool_timer = 0
+
+            for b in self.bullet_list:
+                b.update()
+                if b.rect.bottom <= 0:
+                    self.bullet_list.remove(b)
+
+                
 
             self.live_anim.animate()
             self.live_anim.play_x, self.live_anim.play_y = self.rect.x, self.rect.y
@@ -66,7 +88,10 @@ class Player:
     def draw(self):
         if self.current_state == PlayerState.ALIVE:
             # pygame.draw.rect(self.surface, (255, 0, 0), self.rect) # Testing
+            for b in self.bullet_list:
+                b.draw()
             self.live_anim.draw()
+
         if self.current_state == PlayerState.DYING:
             for explosion in self.explosion_list:
                 explosion.draw()
