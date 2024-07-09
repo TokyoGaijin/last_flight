@@ -38,6 +38,9 @@ class Player:
             if keys[pygame.K_DOWN] and self.rect.bottom <= 480:
                 self.rect.y += self.speed
 
+            self.live_anim.animate()
+            self.live_anim.play_x, self.live_anim.play_y = self.rect.x, self.rect.y
+
             if keys[pygame.K_k]:
                 self.current_state = PlayerState.DYING
 
@@ -62,7 +65,8 @@ class Player:
 
     def draw(self):
         if self.current_state == PlayerState.ALIVE:
-            pygame.draw.rect(self.surface, (255, 0, 0), self.rect) # Testing
+            # pygame.draw.rect(self.surface, (255, 0, 0), self.rect) # Testing
+            self.live_anim.draw()
         if self.current_state == PlayerState.DYING:
             for explosion in self.explosion_list:
                 explosion.draw()
